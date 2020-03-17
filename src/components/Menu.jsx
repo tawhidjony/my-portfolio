@@ -1,21 +1,30 @@
-import React from 'react'
+import React from 'react';
+import {Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import { AiOutlineMenu } from "react-icons/ai";
-/*  */
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+/* Other Package  */
+import Tawhid from '../assets/tawhid.png'
+/* Icons */
+import IconButton from '@material-ui/core/IconButton';
+import { AiOutlineMenu } from "react-icons/ai";
 
-import '../App.css'
+/* CSS */
+import '../App.css';
 
-/*  */
-import {Link} from 'react-router-dom';
+const drawerJson = [
+  { "id":"1", "name":"Resume", "url":"/resume"},
+  { "id":"2", "name":"About","url":"/about"},
+  { "id":"3", "name":"Project", "url":"/project"},
+  { "id":"4", "name":"Contact", "url":"/contact" }
+]
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -33,10 +42,26 @@ const useStyles = makeStyles(theme => ({
 
     list: {
         width: 250,
-      },
-      fullList: {
+    },
+
+    fullList: {
         width: 'auto',
-      },
+    },
+    large: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+      borderRadius: '50px',
+      border: '2px solid white',
+      margin: '20px'
+    },
+    avatarProfile:{
+      display:'flex',
+      justifyContent:'flex-start',
+      alignItems:'center',
+      padding:15,
+      backgroundColor:'#f1f2f3'
+    },
+
 
   }));
   
@@ -61,13 +86,20 @@ const Menu = () => {
           onClick={toggleDrawer(side, false)}
           onKeyDown={toggleDrawer(side, false)}
         >
+          <div className={classes.avatarProfile}>
+              <Avatar alt="Remy Sharp" src={Tawhid} className={classes.large} />
+              <Typography>MD TAWHIDUR RAHMAN </Typography>
+          </div>
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
+            {drawerJson.map((sideNav, index) => (
+              <ListItem button key={index.id}>
+                <Link to={sideNav.url}><ListItemText primary={sideNav.name} /></Link>
               </ListItem>
             ))}
           </List>
+        {/*  <div className={classes.version}>
+            v.1.0.0
+         </div> */}
         </div>
       );
 
@@ -77,7 +109,7 @@ const Menu = () => {
               <Toolbar>
                   <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
                       <AiOutlineMenu 
-                          color="red"
+                          color="black"
                       />
                   </IconButton>
                   <Typography variant="h6" className={classes.title}>
